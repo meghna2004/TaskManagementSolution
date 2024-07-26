@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using TaskManagementSolution.Models;
 using TaskManagementSolution.Services;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     var connectionstring = builder.Configuration.GetConnectionString("DefaultConnection");
    options.UseSqlServer(connectionstring);
 });
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<ApplicationDbContext>();
 
 var app = builder.Build();
 
