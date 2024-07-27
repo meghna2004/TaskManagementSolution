@@ -47,6 +47,14 @@
                     <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                 </div>
             </div>
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Account Type</label>
+                <div class="col-sm-8">
+                    <select class="form-control" asp-for="Input.AccountType" asp-items="Model.AccountTypes"></select>
+                    <span asp-validation-for="Input.AccountType" class="text-danger"></span>
+                </div>
+            </div>
+
            <div class="row mb-3">
                <div class="offset-sm-4 col-sm-4 d-grid">
                    <button type="submit" class="btn btn-primary">Register</button>

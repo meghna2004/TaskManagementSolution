@@ -16,9 +16,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using TaskManagementSolution.Models;
+using TaskManagementSolution.Models.Enums;
 
 namespace TaskManagementSolution.Areas.Identity.Pages.Account
 {
@@ -46,6 +48,7 @@ namespace TaskManagementSolution.Areas.Identity.Pages.Account
             _emailSender = emailSender;
         }
 
+        
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
@@ -88,6 +91,9 @@ namespace TaskManagementSolution.Areas.Identity.Pages.Account
             [Display(Name = "Email")]
             public string Email { get; set; }
 
+            [Required]
+            public AccountType AccountType { get; set; }
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -108,11 +114,14 @@ namespace TaskManagementSolution.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
         }
 
+        public List<SelectListItem> AccountTypes { get; set; }
 
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            AccountTypes = EnumHelper.GetSelectList<AccountType>();
+
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
@@ -128,6 +137,7 @@ namespace TaskManagementSolution.Areas.Identity.Pages.Account
                     Email = Input.Email,
                     UserName = Input.Email,
                     CreatedAt = DateTime.Now,
+                    accounttype = Input.AccountType,
                 };
 
                
@@ -137,7 +147,19 @@ namespace TaskManagementSolution.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
                     //setuserrole
-                    await _userManager.AddToRoleAsync(user, "basicuser");
+                    if (Input.AccountType.ToString() == "TaskUser")
+                    {
+                        await _userManager.AddToRoleAsync(user, "basicuser");
+                    }
+                    if(Input.AccountType.ToString() == "TaskManager")
+                    {
+                        await _userManager.AddToRoleAsync(user, "teammanager");
+
+                    }
+                    if (Input.AccountType.ToString() == "CustomerSupport")
+                    {
+                        await _userManager.AddToRoleAsync(user, "admin");
+                    }
 
 
                     var userId = await _userManager.GetUserIdAsync(user);
@@ -167,6 +189,7 @@ namespace TaskManagementSolution.Areas.Identity.Pages.Account
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
+            AccountTypes = EnumHelper.GetSelectList<AccountType>();
 
             // If we got this far, something failed, redisplay form
             return Page();
