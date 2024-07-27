@@ -1,0 +1,38 @@
+﻿@page
+@model TaskManagementSolution.Pages.BasicUser.IndexModel
+@{
+}
+<h2 class="text-center mb-5">Tasks</h2>
+<div class="row mb-5">
+    <div class="col">
+        <a class="btn btn-primary" href="/BasicUser/CreateTask">New Task</a>
+    </div>
+    <div class="col">
+
+    </div>
+</div>
+
+<table class="table">
+    <tr>
+        <th>DueDate</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Estimate</th>
+        <th>Status</th>
+    </tr>
+    @foreach(var task in Model.tasks)
+    {
+        <tr>
+            <td>@task.DueDate.ToString("dd/MM/yyyy")</td>
+            <td>@task.Name</td>
+            <td>@task.Description</td>
+            <td>@task.Estimate</td>
+            <td>@task.StatusReason</td>
+            <td style="white-space:nowrap">
+                <a class="btn btn-primary btn-sm" href="/BasicUser/EditTask?id=@task.TaskID">Edit</a>
+                <a class="btn btn-primary btn-sm" href="/BasicUser/DeleteTask?id=@task.TaskID">Delete</a>
+
+            </td>
+        </tr>     
+    }
+</table>

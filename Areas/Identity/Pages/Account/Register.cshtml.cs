@@ -151,7 +151,7 @@ namespace TaskManagementSolution.Areas.Identity.Pages.Account
                     {
                         await _userManager.AddToRoleAsync(user, "basicuser");
                     }
-                    if(Input.AccountType.ToString() == "TaskManager")
+                    if (Input.AccountType.ToString() == "TaskManager")
                     {
                         await _userManager.AddToRoleAsync(user, "teammanager");
 
@@ -180,7 +180,20 @@ namespace TaskManagementSolution.Areas.Identity.Pages.Account
                     }
                     else
                     {
+
                         await _signInManager.SignInAsync(user, isPersistent: false);
+                        if (await _userManager.IsInRoleAsync(user, "admin"))
+                        {
+                            return RedirectToPage("/Admin");
+                        }
+                        else if (await _userManager.IsInRoleAsync(user, "teammanager"))
+                        {
+                            return RedirectToPage("/Manager");
+                        }
+                        else
+                        {
+                            return RedirectToPage("/User");
+                        }
                         return LocalRedirect(returnUrl);
                     }
                 }

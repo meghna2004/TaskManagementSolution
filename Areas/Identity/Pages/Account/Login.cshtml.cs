@@ -21,12 +21,16 @@ namespace TaskManagementSolution.Areas.Identity.Pages.Account
     public class LoginModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<ApplicationUser> signInManager,UserManager<ApplicationUser> userManager, ILogger<LoginModel> logger)
         {
             _signInManager = signInManager;
+            _userManager = userManager;
             _logger = logger;
+            
         }
 
         /// <summary>
@@ -110,13 +114,29 @@ namespace TaskManagementSolution.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
+                var userRole = await _userManager.FindByNameAsync(Input.Email);
+
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+                    var user = await _userManager.FindByNameAsync(Input.Email);
+                    if (await _userManager.IsInRoleAsync(userRole, "admin"))
+                    {
+                        return RedirectToPage("/Admin");
+                    }
+                    else if (await _userManager.IsInRoleAsync(userRole, "teammanager"))
+                    {
+                        return RedirectToPage("/Manager");
+                    }
+                    else
+                    {
+                        return RedirectToPage("/User");
+                    }
+
+                   // _logger.LogInformation("User logged in.");
+                   // return RedirectToPage("/Admin", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
                 }
                 if (result.RequiresTwoFactor)
                 {

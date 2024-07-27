@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using TaskManagementSolution.Models.Enums;
 
 namespace TaskManagementSolution.Models
@@ -10,6 +11,8 @@ namespace TaskManagementSolution.Models
         public int TaskListID { get; set; }
         public int TeamID { get; set; }
         public Team? Team { get; set; }
+        public string OwnerID { get; set; }
+        [ForeignKey("OwnerID")]
         public ApplicationUser Owner { get; set; }
         [MaxLength(100)]
         public string Name { get; set; } = string.Empty;
