@@ -18,16 +18,27 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                   
+                    <ul class="nav nav-tabs">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Manage Tasks</a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/BasicUser/ViewTask">Tasks</a>
+                                </li>
+                                <li>
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/BasicUser/ViewTask">Task List</a>
+                                </li>                                
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/BasicUser/ViewTask">Teams</a>
+                                </li>
+                            </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/BasicUser/ViewTask">Tasks</a>
-                        </li>
+                        
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>

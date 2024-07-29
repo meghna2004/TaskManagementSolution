@@ -12,6 +12,8 @@ namespace TaskManagementSolution.Models.DtoModels
         public string? Description { get; set; } 
         public DateOnly DueDate { get; set; }
         public decimal Estimate { get; set; }
-        
+        public StatusReason StatusReason { get; set; }
+
+
     }
 }
