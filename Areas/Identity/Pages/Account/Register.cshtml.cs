@@ -182,6 +182,8 @@ namespace TaskManagementSolution.Areas.Identity.Pages.Account
                     {
 
                         await _signInManager.SignInAsync(user, isPersistent: false);
+                        return LocalRedirect(returnUrl);
+
                         if (await _userManager.IsInRoleAsync(user, "admin"))
                         {
                             return RedirectToPage("/Admin");
@@ -194,7 +196,6 @@ namespace TaskManagementSolution.Areas.Identity.Pages.Account
                         {
                             return RedirectToPage("/User");
                         }
-                        return LocalRedirect(returnUrl);
                     }
                 }
                 foreach (var error in result.Errors)

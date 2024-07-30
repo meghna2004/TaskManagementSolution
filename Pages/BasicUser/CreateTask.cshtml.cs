@@ -84,6 +84,7 @@ namespace TaskManagementSolution.Pages.BasicUser
             taskdto.Estimate = 0;
             ModelState.Clear();
             Response.Redirect("/BasicUser/ViewTask");
+            
         }
     }
 }

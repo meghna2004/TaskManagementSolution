@@ -7,8 +7,8 @@ namespace TaskManagementSolution.Models.DtoModels
 {
     public class TaskListDto
     {
-        public int TeamID { get; set; }
-        
+        public int? TeamID { get; set; }
+        public string? OwnerID { get; set; }
         [MaxLength(100)]
         public string Name { get; set; } = string.Empty;
         [MaxLength(2000)]

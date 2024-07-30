@@ -1,29 +1,27 @@
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using TaskManagementSolution.Models;
 using TaskManagementSolution.Models.DtoModels;
 using TaskManagementSolution.Models.Enums;
+using TaskManagementSolution.Models;
 using TaskManagementSolution.Services;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TaskManagementSolution.Pages.BasicUser
 {
     [Authorize]
-    public class EditTaskModel : PageModel
+    public class EditTaskListModel : PageModel
     {
         private readonly IWebHostEnvironment environment;
         private readonly ApplicationDbContext context;
         private readonly UserManager<ApplicationUser> userManager;
 
         [BindProperty]
-        public TaskDto TaskDto { get; set; } = new TaskDto();
-        public Tasks task { get; set; } = new Tasks();
+        public TaskListDto tlDto { get; set; } = new TaskListDto();
+        public TaskList tList { get; set; } = new TaskList();
         public string errorMessage = string.Empty;
-        
-
-        public EditTaskModel(IWebHostEnvironment environment, ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public EditTaskListModel(IWebHostEnvironment environment, ApplicationDbContext context,UserManager<ApplicationUser> userManager)
         {
             this.environment = environment;
             this.context = context;
@@ -34,28 +32,27 @@ namespace TaskManagementSolution.Pages.BasicUser
         public void OnGet(int? id)
         {
             var userId = userManager.GetUserId(User);
-           
             statusreason = EnumHelper.GetSelectList<StatusReason>();
 
             if (id == null)
             {
-                Response.Redirect("/BasicUser/ViewTask");
+                Response.Redirect("/BasicUser/ViewTaskList");
                 return;
             }
-            var edittask = context.Tasks.Find(id);
-            if (edittask == null) 
+            var edittl = context.TaskList.Find(id);
+            if (edittl == null)
             {
-                Response.Redirect("/BasicUser/ViewTask");
+                Response.Redirect("/BasicUser/ViewTaskList");
                 return;
             }
-            TaskDto.Name = edittask.Name;
-            TaskDto.Description = edittask.Description;
-            TaskDto.DueDate = edittask.DueDate;
-            TaskDto.Estimate = edittask.Estimate;
-            TaskDto.StatusReason = edittask.StatusReason;
-            TaskDto.OwnerID = edittask.OwnerID;
-            task = edittask;
-            if (TaskDto.OwnerID != userId)
+            tlDto.Name = edittl.Name;
+            tlDto.Description = edittl.Description;
+            tlDto.DueDate = edittl.DueDate;
+            tlDto.Estimate = edittl.Estimate;
+            tlDto.StatusReason = edittl.StatusReason;
+            tlDto.OwnerID = edittl.OwnerID;
+            tList = edittl;
+            if (tlDto.OwnerID != userId)
             {
                 Response.Redirect("/Error");
                 return;
@@ -65,7 +62,7 @@ namespace TaskManagementSolution.Pages.BasicUser
         {
             if (id == null)
             {
-                Response.Redirect("/BasicUser/ViewTask");
+                Response.Redirect("/BasicUser/ViewTaskList");
                 return;
             }
             if (!ModelState.IsValid)
@@ -73,23 +70,22 @@ namespace TaskManagementSolution.Pages.BasicUser
                 errorMessage = "Please provide all the details";
                 return;
             }
-            var editedtask = context.Tasks.Find(id);
+            var editedtask = context.TaskList.Find(id);
             if (editedtask == null)
             {
-                Response.Redirect("/BasicUser/ViewTask");
+                Response.Redirect("/BasicUser/ViewTaskList");
                 return;
             }
-            editedtask.Name = TaskDto.Name;
-            editedtask.Description=TaskDto.Description; 
-            editedtask.DueDate = TaskDto.DueDate;
-            editedtask.Estimate = TaskDto.Estimate;
-            editedtask.StatusReason = TaskDto.StatusReason;
-            task = editedtask;
+            editedtask.Name = tlDto.Name;
+            editedtask.Description = tlDto.Description;
+            editedtask.DueDate = tlDto.DueDate;
+            editedtask.Estimate = tlDto.Estimate;
+            editedtask.StatusReason = tlDto.StatusReason;
+            tList = editedtask;
             context.SaveChanges();
 
-            Response.Redirect("/BasicUser/ViewTask");
+            Response.Redirect("/BasicUser/ViewTaskList");
 
         }
-
     }
 }

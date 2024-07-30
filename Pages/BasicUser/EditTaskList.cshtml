@@ -1,5 +1,5 @@
 ﻿@page
-@model TaskManagementSolution.Pages.BasicUser.EditTaskModel
+@model TaskManagementSolution.Pages.BasicUser.EditTaskListModel
 @{
 }
 <div class="row">
@@ -12,45 +12,45 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         }
-        @if(@Model.TaskDto.StatusReason== Models.Enums.StatusReason.Completed)
+        @if (@Model.tlDto.StatusReason == Models.Enums.StatusReason.Completed)
         {
             <form method="post" enctype="multipart/form-data">
                 <div class="row mb-3">
                     <label class="col-sm-4 col-form-label">Name</label>
                     <div class="col-sm-8">
-                        <input readonly class="form-control" asp-for="TaskDto.Name">
-                        <span asp-validation-for="TaskDto.Name" class="text-danger"></span>
+                        <input readonly class="form-control" asp-for="tlDto.Name">
+                        <span asp-validation-for="tlDto.Name" class="text-danger"></span>
 
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label class="col-sm-4 col-form-label">Description</label>
                     <div class="col-sm-8">
-                        <textarea readonly class="form-control" asp-for="TaskDto.Description"></textarea>
-                        <span asp-validation-for="TaskDto.Description" class="text-danger"></span>
+                        <textarea readonly class="form-control" asp-for="tlDto.Description"></textarea>
+                        <span asp-validation-for="tlDto.Description" class="text-danger"></span>
 
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label class="col-sm-4 col-form-label">Estimate</label>
                     <div class="col-sm-8">
-                        <input readonly class="form-control" type="number" step=".01" min="0" asp-for="TaskDto.Estimate">
-                        <span asp-validation-for="TaskDto.Estimate" class="text-danger"></span>
+                        <input readonly class="form-control" type="number" step=".01" min="0" asp-for="tlDto.Estimate">
+                        <span asp-validation-for="tlDto.Estimate" class="text-danger"></span>
 
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label class="col-sm-4 col-form-label">DueDate</label>
                     <div class="col-sm-8">
-                        <input readonly class="form-control" type="date" asp-for="TaskDto.DueDate">
-                        <span asp-validation-for="TaskDto.DueDate" class="text-danger"></span>
+                        <input readonly class="form-control" type="date" asp-for="tlDto.DueDate">
+                        <span asp-validation-for="tlDto.DueDate" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label class="col-sm-4 col-form-label">Status </label>
                     <div class="col-sm-8">
-                        <input readonly class="form-control" asp-for="TaskDto.StatusReason" ></input>
-                        <span asp-validation-for="TaskDto.StatusReason" class="text-danger"></span>
+                        <input readonly class="form-control" asp-for="tlDto.StatusReason"></input>
+                        <span asp-validation-for="tlDto.StatusReason" class="text-danger"></span>
                     </div>
                 </div>
 
@@ -59,7 +59,7 @@
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                     <div class="col-sm-4 d-grid">
-                        <a class="btn btn-outline-primary" href="/BasicUser/ViewTask" role="button">Cancel</a>
+                        <a class="btn btn-outline-primary" href="/BasicUser/ViewTaskList" role="button">Cancel</a>
                     </div>
                 </div>
             </form>
@@ -70,39 +70,39 @@
                 <div class="row mb-3">
                     <label class="col-sm-4 col-form-label">Name</label>
                     <div class="col-sm-8">
-                        <input class="form-control" asp-for="TaskDto.Name">
-                        <span asp-validation-for="TaskDto.Name" class="text-danger"></span>
+                        <input class="form-control" asp-for="tlDto.Name">
+                        <span asp-validation-for="tlDto.Name" class="text-danger"></span>
 
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label class="col-sm-4 col-form-label">Description</label>
                     <div class="col-sm-8">
-                        <textarea class="form-control" asp-for="TaskDto.Description"></textarea>
-                        <span asp-validation-for="TaskDto.Description" class="text-danger"></span>
+                        <textarea class="form-control" asp-for="tlDto.Description"></textarea>
+                        <span asp-validation-for="tlDto.Description" class="text-danger"></span>
 
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label class="col-sm-4 col-form-label">Estimate</label>
                     <div class="col-sm-8">
-                        <input class="form-control" type="number" step=".01" min="0" asp-for="TaskDto.Estimate">
-                        <span asp-validation-for="TaskDto.Estimate" class="text-danger"></span>
+                        <input class="form-control" type="number" step=".01" min="0" asp-for="tlDto.Estimate">
+                        <span asp-validation-for="tlDto.Estimate" class="text-danger"></span>
 
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label class="col-sm-4 col-form-label">DueDate</label>
                     <div class="col-sm-8">
-                        <input class="form-control" type="date" asp-for="TaskDto.DueDate">
-                        <span asp-validation-for="TaskDto.DueDate" class="text-danger"></span>
+                        <input class="form-control" type="date" asp-for="tlDto.DueDate">
+                        <span asp-validation-for="tlDto.DueDate" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label class="col-sm-4 col-form-label">Status </label>
                     <div class="col-sm-8">
-                        <select class="form-control" asp-for="TaskDto.StatusReason" asp-items="Model.statusreason"></select>
-                        <span asp-validation-for="TaskDto.StatusReason" class="text-danger"></span>
+                        <select class="form-control" asp-for="tlDto.StatusReason" asp-items="Model.statusreason"></select>
+                        <span asp-validation-for="tlDto.StatusReason" class="text-danger"></span>
                     </div>
                 </div>
 
@@ -111,11 +111,11 @@
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                     <div class="col-sm-4 d-grid">
-                        <a class="btn btn-outline-primary" href="/BasicUser/ViewTask" role="button">Cancel</a>
+                        <a class="btn btn-outline-primary" href="/BasicUser/ViewTaskList" role="button">Cancel</a>
                     </div>
                 </div>
             </form>
         }
-        
+
     </div>
 </div>

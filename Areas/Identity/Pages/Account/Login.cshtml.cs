@@ -121,7 +121,10 @@ namespace TaskManagementSolution.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+
                     var user = await _userManager.FindByNameAsync(Input.Email);
+                    return LocalRedirect(returnUrl);
+
                     if (await _userManager.IsInRoleAsync(userRole, "admin"))
                     {
                         return RedirectToPage("/Admin");

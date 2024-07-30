@@ -25,10 +25,12 @@
         <tbody>
         @foreach(var tl in Model.taskLists)
         {
+            var collapseId = $"CollapseData{tl.TaskListID}";
+
             <tr>
                 <td>
                     <a class="btn btn-primary btn-sm" href="/BasicUser/CreateTask?id=@tl.TaskListID">Add Task</a>
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"></button>
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#@collapseId" aria-expanded="false" aria-controls="@collapseId"></button>
 
                 </td>
                 <td>@tl.DueDate.ToString("dd/MM/yyyy")</td>
@@ -41,7 +43,7 @@
                     <a class="btn btn-primary btn-sm" href="/BasicUser/DeleteTaskList?id=@tl.TaskListID">Delete</a>
                 </td>
             </tr>
-            <tr class="collapse" id="collapseExample">
+            <tr class="collapse" id="@collapseId">
                 <td colspan="5">
                     <table class="table mb-0">
                         <thead>

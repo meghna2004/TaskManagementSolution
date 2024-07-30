@@ -14,6 +14,7 @@ namespace TaskManagementSolution.Models.DtoModels
         public decimal Estimate { get; set; }
         public StatusReason StatusReason { get; set; }
         public int? TaskListID { get; set; }
+        public string? OwnerID { get; set; }
 
 
 

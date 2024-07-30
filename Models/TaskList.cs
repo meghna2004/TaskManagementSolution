@@ -9,7 +9,7 @@ namespace TaskManagementSolution.Models
     {
         [Key]
         public int TaskListID { get; set; }
-        public int TeamID { get; set; }
+        public int? TeamID { get; set; }
         public Team? Team { get; set; }
         public string OwnerID { get; set; }
         [ForeignKey("OwnerID")]
