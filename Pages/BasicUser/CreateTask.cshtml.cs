@@ -16,7 +16,7 @@ namespace TaskManagementSolution.Pages.BasicUser
 
 
         [BindProperty]
-        public TaskDto taskdto { get; set; } 
+        public TaskDto taskdto { get; set; } = new TaskDto();
         public CreateTaskModel(IWebHostEnvironment environment,ApplicationDbContext context,UserManager<ApplicationUser> userManager)
         {
             this.environment = environment;
