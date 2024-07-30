@@ -16,18 +16,27 @@ namespace TaskManagementSolution.Pages.BasicUser
 
 
         [BindProperty]
-        public TaskDto taskdto { get; set; } = new TaskDto();
+        public TaskDto taskdto { get; set; } 
         public CreateTaskModel(IWebHostEnvironment environment,ApplicationDbContext context,UserManager<ApplicationUser> userManager)
         {
             this.environment = environment;
             this.context = context;
             this.userManager = userManager;
         }
-        public void OnGet()
+        public void OnGet(int? id)
         {
+            if (id == null)
+            {
+                return;
+            }
+            taskdto= new TaskDto
+            {
+                TaskListID = id
+            };
+           
         }
         public string errorMessage = string.Empty;
-        public void OnPost() 
+        public void OnPost(int? id) 
         {
             if(taskdto.Name == null)
             {
@@ -39,16 +48,34 @@ namespace TaskManagementSolution.Pages.BasicUser
                 return;
             }
             var userId = userManager.GetUserId(User); // Get the current user's ID
+            Tasks task = new Tasks();
 
-            Tasks task = new Tasks()
+            if (id == null) 
             {
-                Name = taskdto.Name,
-                Description = taskdto.Description,
-                Estimate = taskdto.Estimate,
-                DueDate = taskdto.DueDate,
-                OwnerID = userId,
-                StatusReason= Models.Enums.StatusReason.Draft,
-            };
+                 task = new Tasks()
+                {
+                    Name = taskdto.Name,
+                    Description = taskdto.Description,
+                    Estimate = taskdto.Estimate,
+                    DueDate = taskdto.DueDate,
+                    OwnerID = userId,
+                    StatusReason = Models.Enums.StatusReason.Draft,
+                };
+            }
+            else
+            {
+                 task = new Tasks()
+                {
+                    Name = taskdto.Name,
+                    Description = taskdto.Description,
+                    Estimate = taskdto.Estimate,
+                    DueDate = taskdto.DueDate,
+                    OwnerID = userId,
+                    StatusReason = Models.Enums.StatusReason.Draft,
+                    TaskListID = id,
+                };
+            }
+            
             context.Tasks.Add(task);
             context.SaveChanges();
             taskdto.Name = "";

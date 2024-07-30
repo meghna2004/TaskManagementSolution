@@ -1,0 +1,77 @@
+﻿@page
+@model TaskManagementSolution.Pages.BasicUser.ViewTaskListModel
+@{
+}
+<h2 class="text-center mb-5">Task Lists</h2>
+<div class="row mb-5">
+    <div class="col">
+        <a class="btn btn-primary" href="/BasicUser/CreateTaskList">New TaskList</a>
+    </div>
+    <div class="col">
+    </div>
+</div>
+
+<table class="table table-striped table-bordered">
+        <thead>
+        <tr>
+            <th></th>
+            <th>DueDate</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Estimate</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach(var tl in Model.taskLists)
+        {
+            <tr>
+                <td>
+                    <a class="btn btn-primary btn-sm" href="/BasicUser/CreateTask?id=@tl.TaskListID">Add Task</a>
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"></button>
+
+                </td>
+                <td>@tl.DueDate.ToString("dd/MM/yyyy")</td>
+                <td>@tl.Name</td>
+                <td>@tl.Description</td>
+                <td>@tl.Estimate</td>
+                <td>@tl.StatusReason</td>
+                <td style="white-space:nowrap">
+                    <a class="btn btn-primary btn-sm" href="/BasicUser/EditTaskList?id=@tl.TaskListID">Edit</a>
+                    <a class="btn btn-primary btn-sm" href="/BasicUser/DeleteTaskList?id=@tl.TaskListID">Delete</a>
+                </td>
+            </tr>
+            <tr class="collapse" id="collapseExample">
+                <td colspan="5">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th>DueDate</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Estimate</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>                         
+                            @foreach(var t in tl.tasks)
+                            {
+                                <tr>
+                                    <td>@t.DueDate.ToString("dd/MM/yyyy")</td>
+                                    <td>@t.Name</td>
+                                    <td>@t.Description</td>
+                                    <td>@t.Estimate</td>
+                                    <td>@t.StatusReason</td>
+                                    <td style="white-space:nowrap">
+                                        <a class="btn btn-primary btn-sm" href="/BasicUser/EditTask?id=@t.TaskID">Edit</a>
+                                        <a class="btn btn-primary btn-sm" href="/BasicUser/DeleteTask?id=@t.TaskID">Delete</a>
+                                    </td>
+                                </tr>                           
+                            }                        
+                    </table>
+                </td>
+            </tr>
+        } 
+        
+            
+        </tbody>
+</table>

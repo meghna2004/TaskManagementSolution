@@ -15,6 +15,7 @@ namespace TaskManagementSolution.Services
         public DbSet<TaskList> TaskList { get; set; }
         public DbSet<TaskManager> TaskManager { get; set; }
         public DbSet<Tasks> Tasks { get; set; }
+
         public DbSet<TaskUser> TaskUser { get; set; }
         public DbSet<Team> Team { get; set; }
         public DbSet<TeamMember> TeamMember { get; set; }
@@ -32,6 +33,11 @@ namespace TaskManagementSolution.Services
             var managerRole = new IdentityRole("teammanager");
             managerRole.NormalizedName = "TeamManager";
             modelBuilder.Entity<IdentityRole>().HasData(userRole, adminRole, managerRole);
+
+            modelBuilder.Entity<Tasks>()
+                .HasOne(t => t.TaskList)
+                .WithMany(tl => tl.tasks)
+                .HasForeignKey(t => t.TaskListID);
         }
     }
 }
